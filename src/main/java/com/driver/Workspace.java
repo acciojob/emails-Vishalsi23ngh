@@ -1,5 +1,6 @@
 package com.driver;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,16 +25,17 @@ public class Workspace extends Gmail {
         Collections.sort(calendar, Comparator.comparing(Meeting::getEndTime));
 
         int maxMeetings = 0;
-        Meeting lastMeeting = null;
+        LocalTime lastEndTime = LocalTime.MIN;
 
         for (Meeting meeting : calendar) {
             // If the meeting starts after the end time of the last meeting attended, attend it
-            if (lastMeeting == null || meeting.getStartTime().isAfter(lastMeeting.getEndTime())) {
+            if (meeting.getStartTime().isAfter(lastEndTime)) {
                 maxMeetings++;
-                lastMeeting = meeting;
+                lastEndTime = meeting.getEndTime();
             }
         }
 
         return maxMeetings;
     }
+
 }

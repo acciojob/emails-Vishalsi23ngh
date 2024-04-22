@@ -1,9 +1,9 @@
 package com.driver;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 public class Meeting {
+
     private LocalTime startTime;
     private LocalTime endTime;
 
@@ -13,7 +13,11 @@ public class Meeting {
     }
 
 
-    public  LocalTime getEndTime(ArrayList<LocalTime> endtime){
-        return  endTime;
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
     }
 }

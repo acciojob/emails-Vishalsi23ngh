@@ -18,10 +18,6 @@ public class Email {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public void changePassword(String oldPassword, String newPassword){
         //Change password only if the oldPassword is equal to current password and the new password meets all of the following:
         // 1. It contains at least 8 characters
@@ -29,29 +25,47 @@ public class Email {
         // 3. It contains at least one lowercase letter
         // 4. It contains at least one digit
         // 5. It contains at least one special character. Any character apart from alphabets and digits is a special character
-        boolean containsNum = false;
-        boolean containsUpper = false;
-        boolean containsLower = false;
-        boolean containsSpecial = false;
-        for(int i = 0; i < newPassword.length();i++){
-            int ele = (int)newPassword.charAt(i);
-            if(ele <=90 && ele >=65){
-                containsUpper = true;
+
+        if(oldPassword.equals(password)){
+            if(isValid(newPassword)){
+                System.out.println("Password changed successfully!");
+                this.password = newPassword;
             }
-            if(ele <=122 && ele >=97){
-                containsLower = true;
-            }
-            if(ele <=57 && ele >=48){
-                containsNum = true;
-            }
-            if(ele <=47 && ele >=33){
-                containsSpecial = true;
+            else{
+                System.out.println("The new password is not valid!");
             }
         }
-        if(getPassword().equals(oldPassword)){
-            if(newPassword.length() >= 8 && containsUpper == true &&  containsUpper == true &&  containsNum == true && containsSpecial ==true){
-                setPassword(newPassword);
-            }
+        else{
+            System.out.println("The given password does not match current password!");
         }
+    }
+
+    private Boolean isValid(String password){
+        Boolean capitalLetter = false;
+        Boolean smallLetter = false;
+        Boolean digit = false;
+        Boolean specialCharacter = false;
+
+        if(password.length() < 8){
+            return false;
+        }
+
+        for(int i = 0; i<password.length(); i++){
+            char ch = password.charAt(i);
+            if((ch >= 'A') && (ch <= 'Z')){
+                capitalLetter = true;
+            }
+            else if((ch >= 'a') && (ch <= 'z')){
+                smallLetter = true;
+            }
+            else if((ch >= '0') && (ch <= '9')){
+                digit = true;
+            }
+            else specialCharacter = true;
+        }
+
+        if(capitalLetter && smallLetter && digit && specialCharacter)
+            return true;
+        return false;
     }
 }
